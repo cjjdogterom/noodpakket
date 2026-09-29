@@ -6,6 +6,7 @@ import { OrderSummary } from "@/components/cart/OrderSummary";
 import { QtyStepper } from "@/components/AddToCart";
 import { PackArt } from "@/components/PackArt";
 import { formatPrice } from "@/lib/format";
+import { Atmosphere } from "@/components/Atmosphere";
 
 export default function CartPage() {
   const { totals, ready, setQty, remove } = useCart();
@@ -25,13 +26,15 @@ export default function CartPage() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-14">
+    <div className="relative overflow-hidden">
+      <Atmosphere />
+      <div className="relative mx-auto max-w-6xl px-4 py-14">
       <h1 className="font-display text-4xl font-semibold tracking-tight sm:text-5xl">Winkelwagen</h1>
       <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_360px]">
         <ul className="divide-y divide-line border-y border-line">
           {totals.resolved.map(({ product, qty, totalCents }) => (
             <li key={product.slug} className="flex gap-4 py-5 sm:gap-6">
-              <Link href={`/pakketten/${product.slug}`} className="w-24 shrink-0 overflow-hidden rounded-xl border border-line sm:w-32">
+              <Link href={`/pakketten/${product.slug}`} className="w-20 shrink-0 overflow-hidden rounded-xl border border-line sm:w-32">
                 <PackArt art={product.art} className="aspect-[5/4] w-full" />
               </Link>
               <div className="flex flex-1 flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -48,9 +51,9 @@ export default function CartPage() {
                     Verwijderen
                   </button>
                 </div>
-                <div className="flex items-center justify-between gap-6">
+                <div className="flex items-center justify-between gap-3">
                   <QtyStepper value={qty} onChange={(n) => setQty(product.slug, n)} />
-                  <span className="w-24 text-right font-display text-lg font-bold tabular-nums">{formatPrice(totalCents)}</span>
+                  <span className="shrink-0 text-right font-display text-lg font-bold tabular-nums">{formatPrice(totalCents)}</span>
                 </div>
               </div>
             </li>
@@ -70,6 +73,7 @@ export default function CartPage() {
             </Link>
           </OrderSummary>
         </div>
+      </div>
       </div>
     </div>
   );

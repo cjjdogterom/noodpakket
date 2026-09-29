@@ -1,17 +1,24 @@
 @import "tailwindcss";
 
 :root {
-  --night: #0f1a24;
-  --slate: #1c2b38;
-  --slate-2: #2a3d4e;
-  --amber: #f0a21e;
-  --amber-2: #c9800a;
-  --amber-soft: #fbe3b3;
-  --bone: #f3efe7;
-  --bone-2: #e8e2d6;
-  --muted: #5a6873;
-  --mist: #93a4b2;
-  --line: #d9d2c5;
+  --night: #0e1620;
+  --slate: #1a2734;
+  --slate-2: #27394a;
+  --amber: #f2a93b;
+  --amber-2: #b8730a;
+  --amber-soft: #fbe0b0;
+  --bone: #f4f2ed;
+  --bone-2: #e9e5dc;
+  --muted: #5b6771;
+  --mist: #9aaab8;
+  --line: #d9d3c8;
+
+  /* Liquid glass */
+  --glass-bg: rgba(255, 255, 255, 0.42);
+  --glass-bg-dark: rgba(255, 255, 255, 0.07);
+  --glass-blur: 18px;
+  --glass-edge: rgba(255, 255, 255, 0.75);
+  --glass-edge-dark: rgba(255, 255, 255, 0.22);
 }
 
 @theme inline {
@@ -34,6 +41,7 @@
 body {
   background: var(--bone);
   color: var(--night);
+  text-rendering: optimizeLegibility;
 }
 
 ::selection {
@@ -46,26 +54,109 @@ body {
   outline-offset: 3px;
 }
 
-/* Lichtcirkel in de hero: ademt langzaam */
+/* ---------- Liquid glass ---------- */
+/* Gelaagd: blur + verzadiging, een lichte specular rand bovenaan, zachte val-schaduw. */
+.glass {
+  position: relative;
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(170%);
+  backdrop-filter: blur(var(--glass-blur)) saturate(170%);
+  box-shadow:
+    inset 0 1px 0 var(--glass-edge),
+    inset 1px 0 0 rgba(255, 255, 255, 0.35),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.12),
+    0 1px 2px rgba(14, 22, 32, 0.06),
+    0 24px 48px -24px rgba(14, 22, 32, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+}
+.glass-dark {
+  position: relative;
+  background: var(--glass-bg-dark);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  box-shadow:
+    inset 0 1px 0 var(--glass-edge-dark),
+    inset 1px 0 0 rgba(255, 255, 255, 0.1),
+    0 30px 60px -30px rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+/* Glans-reflectie: een zachte lichtvlek linksboven, zoals licht dat door glas valt */
+.glass::before,
+.glass-dark::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(120% 60% at 0% 0%, rgba(255, 255, 255, 0.45), transparent 60%);
+  opacity: 0.6;
+}
+.glass-dark::before {
+  opacity: 0.25;
+}
+@supports not (backdrop-filter: blur(1px)) {
+  .glass { background: rgba(255, 255, 255, 0.88); }
+  .glass-dark { background: rgba(26, 39, 52, 0.94); }
+}
+
+/* Glazen knop: capsule met specular rand */
+.glass-btn {
+  position: relative;
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  backdrop-filter: blur(14px) saturate(160%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.08),
+    0 8px 20px -10px rgba(14, 22, 32, 0.4);
+  transition: transform 180ms cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 180ms, background-color 180ms;
+}
+.glass-btn:hover { transform: translateY(-1px); }
+.glass-btn:active { transform: translateY(0) scale(0.98); }
+
+/* ---------- Atmosfeer achter het glas ---------- */
+.aurora {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.aurora > i {
+  position: absolute;
+  border-radius: 999px;
+  opacity: 0.8;
+  will-change: transform;
+  animation: drift 26s ease-in-out infinite alternate;
+}
+/* Radiale verlopen in plaats van filter: blur — zelfde zachtheid, veel goedkoper om te tekenen */
+.aurora > i:nth-child(1) { width: 52rem; height: 52rem; left: -14rem; top: -16rem; background: radial-gradient(closest-side, rgba(246, 201, 130, 0.7), transparent); }
+.aurora > i:nth-child(2) { width: 46rem; height: 46rem; right: -12rem; top: 4rem; background: radial-gradient(closest-side, rgba(188, 210, 232, 0.75), transparent); animation-delay: -9s; }
+.aurora > i:nth-child(3) { width: 36rem; height: 36rem; left: 35%; bottom: -14rem; background: radial-gradient(closest-side, rgba(244, 227, 196, 0.8), transparent); animation-delay: -17s; }
+@keyframes drift {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(4rem, 2.5rem, 0) scale(1.08); }
+}
+
 .glow {
-  background: radial-gradient(closest-side, rgba(240, 162, 30, 0.55), rgba(240, 162, 30, 0.12) 55%, transparent 100%);
+  background: radial-gradient(closest-side, rgba(242, 169, 59, 0.6), rgba(242, 169, 59, 0.14) 55%, transparent 100%);
   animation: breathe 7s ease-in-out infinite;
 }
 @keyframes breathe {
   0%, 100% { transform: scale(1); opacity: 0.9; }
-  50% { transform: scale(1.08); opacity: 1; }
+  50% { transform: scale(1.07); opacity: 1; }
 }
 
 .rise {
-  animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 @keyframes rise {
-  from { opacity: 0; transform: translateY(14px); }
+  from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .glow, .rise { animation: none; }
+  .glow, .rise, .aurora > i { animation: none; }
+  .glass-btn { transition: none; }
 }
 
 /* Paklijst: stippellijn tussen naam en aantal */
@@ -82,9 +173,7 @@ body {
   opacity: 0.35;
   transform: translateY(-0.25em);
 }
-.leader > :last-child {
-  order: 2;
-}
+.leader > :last-child { order: 2; }
 
 details > summary { list-style: none; }
 details > summary::-webkit-details-marker { display: none; }

@@ -9,17 +9,17 @@ export function OrderSummary({ showLines = false, children }: { showLines?: bool
   const remaining = SITE.shipping.freeFromCents - totals.subtotalCents;
 
   return (
-    <aside className="rounded-2xl border border-line bg-white/70 p-6">
-      <h2 className="font-display text-xl font-bold">Overzicht</h2>
+    <aside className="glass rounded-[1.6rem] p-6">
+      <h2 className="font-display text-xl font-bold tracking-tight">Overzicht</h2>
 
       {showLines && (
-        <ul className="mt-4 space-y-2 border-b border-line pb-4 text-sm">
+        <ul className="mt-4 space-y-2 border-b border-night/10 pb-4 text-sm">
           {totals.resolved.map(({ product, qty, totalCents }) => (
             <li key={product.slug} className="flex justify-between gap-3">
               <span>
-                {qty}× {product.name}
+                <span className="font-mono text-muted">{qty}×</span> {product.name}
               </span>
-              <span className="tabular-nums">{formatPrice(totalCents)}</span>
+              <span className="font-mono tabular-nums">{formatPrice(totalCents)}</span>
             </li>
           ))}
         </ul>
@@ -28,15 +28,15 @@ export function OrderSummary({ showLines = false, children }: { showLines?: bool
       <dl className="mt-4 space-y-2 text-sm">
         <div className="flex justify-between">
           <dt>Subtotaal</dt>
-          <dd className="tabular-nums">{formatPrice(totals.subtotalCents)}</dd>
+          <dd className="font-mono tabular-nums">{formatPrice(totals.subtotalCents)}</dd>
         </div>
         <div className="flex justify-between">
           <dt>Verzending</dt>
-          <dd className="tabular-nums">{totals.shippingCents === 0 ? "Gratis" : formatPrice(totals.shippingCents)}</dd>
+          <dd className="font-mono tabular-nums">{totals.shippingCents === 0 ? "Gratis" : formatPrice(totals.shippingCents)}</dd>
         </div>
-        <div className="flex justify-between border-t border-line pt-3 font-display text-lg font-semibold">
+        <div className="flex justify-between border-t border-night/10 pt-3 font-display text-lg font-bold">
           <dt>Totaal</dt>
-          <dd className="tabular-nums">{formatPrice(totals.totalCents)}</dd>
+          <dd className="font-mono tabular-nums">{formatPrice(totals.totalCents)}</dd>
         </div>
         <p className="text-xs text-muted">Inclusief 21% btw</p>
       </dl>
@@ -46,9 +46,9 @@ export function OrderSummary({ showLines = false, children }: { showLines?: bool
           <p className="text-sm">
             Nog <strong>{formatPrice(remaining)}</strong> tot gratis verzending
           </p>
-          <div className="mt-2 h-2 overflow-hidden rounded-full bg-bone-2">
+          <div className="mt-2 h-2 overflow-hidden rounded-full bg-night/10">
             <div
-              className="h-full rounded-full bg-amber"
+              className="h-full rounded-full bg-amber transition-[width] duration-300"
               style={{ width: `${Math.min(100, (totals.subtotalCents / SITE.shipping.freeFromCents) * 100)}%` }}
             />
           </div>

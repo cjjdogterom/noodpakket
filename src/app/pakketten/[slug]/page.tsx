@@ -8,6 +8,8 @@ import { ProductCard } from "@/components/ProductCard";
 import { PackList, GROUP_ORDER } from "@/components/PackList";
 import { formatPrice } from "@/lib/format";
 import { SITE } from "@/lib/site";
+import { Icon } from "@/components/Icons";
+import { Atmosphere } from "@/components/Atmosphere";
 
 export function generateStaticParams() {
   return PRODUCTS.map((p) => ({ slug: p.slug }));
@@ -42,7 +44,7 @@ export default async function ProductPage({ params }: PageProps<"/pakketten/[slu
 
         <div className="mt-8 grid gap-12 md:grid-cols-[1.1fr_1fr] md:gap-16">
           <div className="md:sticky md:top-28 md:self-start">
-            <div className="relative overflow-hidden rounded-3xl bg-bone-2">
+            <div className="relative overflow-hidden rounded-[1.6rem] bg-bone-2">
               <PackArt art={product.art} className="aspect-[5/4] w-full" />
               {product.badge && (
                 <span className="absolute left-4 top-4 rounded-full bg-amber px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-wider text-night">
@@ -50,9 +52,9 @@ export default async function ProductPage({ params }: PageProps<"/pakketten/[slu
                 </span>
               )}
             </div>
-            <dl className="mt-4 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-4">
+            <dl className="glass mt-4 grid grid-cols-2 divide-x divide-night/10 rounded-[1.4rem] sm:grid-cols-4">
               {facts.map(([k, v]) => (
-                <div key={k} className="bg-bone p-4">
+                <div key={k} className="p-4">
                   <dt className="font-mono text-[11px] uppercase tracking-wider text-muted">{k}</dt>
                   <dd className="mt-1 font-semibold">{v}</dd>
                 </div>
@@ -61,7 +63,7 @@ export default async function ProductPage({ params }: PageProps<"/pakketten/[slu
           </div>
 
           <div>
-            <h1 className="font-display text-4xl font-semibold leading-[1.02] tracking-tight sm:text-5xl">{product.name}</h1>
+            <h1 className="font-display text-4xl font-bold leading-[1.02] tracking-tight sm:text-5xl">{product.name}</h1>
             <div className="mt-5 flex items-baseline gap-3">
               <span className="font-display text-4xl font-bold tracking-tight">{formatPrice(product.priceCents)}</span>
               {product.compareAtCents && (
@@ -85,15 +87,15 @@ export default async function ProductPage({ params }: PageProps<"/pakketten/[slu
               <AddToCartWithQty slug={product.slug} disabled={!product.inStock} />
             </div>
 
-            <ul className="mt-6 grid gap-x-6 gap-y-1.5 border-y border-line py-4 text-sm text-muted sm:grid-cols-2">
-              <li>{SITE.shipping.deliveryText}</li>
-              <li>Gratis verzending vanaf {formatPrice(SITE.shipping.freeFromCents)}</li>
-              <li>30 dagen bedenktijd</li>
-              <li>Veilig betalen via Mollie</li>
+            <ul className="mt-6 grid gap-x-6 gap-y-2.5 border-y border-night/10 py-4 text-sm text-muted sm:grid-cols-2">
+              <li className="flex items-center gap-2"><Icon.Truck size={16} /> {SITE.shipping.deliveryText}</li>
+              <li className="flex items-center gap-2"><Icon.Package size={16} /> Gratis verzending vanaf {formatPrice(SITE.shipping.freeFromCents)}</li>
+              <li className="flex items-center gap-2"><Icon.Undo size={16} /> 30 dagen bedenktijd</li>
+              <li className="flex items-center gap-2"><Icon.Lock size={16} /> Veilig betalen via Mollie</li>
             </ul>
 
             <section className="mt-12">
-              <h2 className="font-display text-2xl font-semibold">Paklijst</h2>
+              <h2 className="font-display text-2xl font-bold tracking-tight">Paklijst</h2>
               <div className="mt-6 space-y-8">
                 {GROUP_ORDER.map((g) => (
                   <PackList key={g} items={product.contents} group={g} />
@@ -105,9 +107,10 @@ export default async function ProductPage({ params }: PageProps<"/pakketten/[slu
       </div>
 
       {related.length > 0 && (
-        <section className="border-t border-line bg-bone-2/60">
-          <div className="mx-auto max-w-6xl px-4 py-20">
-            <h2 className="font-display text-3xl font-semibold tracking-tight">Ook interessant</h2>
+        <section className="relative overflow-hidden border-t border-night/10">
+          <Atmosphere />
+          <div className="relative mx-auto max-w-6xl px-4 py-20">
+            <h2 className="font-display text-3xl font-bold tracking-tight">Ook interessant</h2>
             <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {related.map((p) => (
                 <ProductCard key={p.slug} product={p} />

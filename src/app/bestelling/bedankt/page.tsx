@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { formatPrice } from "@/lib/format";
+import { Icon } from "@/components/Icons";
 
 export const metadata: Metadata = { title: "Bedankt voor je bestelling", robots: { index: false } };
 
@@ -11,7 +12,7 @@ export default async function ThanksPage({ searchParams }: PageProps<"/bestellin
 
   return (
     <div className="mx-auto max-w-xl px-4 py-24 text-center">
-      <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-slate text-3xl text-bone">✓</div>
+      <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-night text-amber"><Icon.Check size={28} /></div>
       <h1 className="mt-6 font-display text-4xl font-semibold tracking-tight">Bedankt voor je bestelling!</h1>
       {order && (
         <p className="mt-3 text-lg">

@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useCart } from "@/components/cart/CartProvider";
 import { OrderSummary } from "@/components/cart/OrderSummary";
 import { buildOrderDraft, submitOrder, type Customer } from "@/lib/orders";
+import { Atmosphere } from "@/components/Atmosphere";
 
 const PAYMENT_METHODS = ["iDEAL", "Bancontact", "Creditcard", "PayPal"] as const;
 
@@ -58,7 +59,9 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-14">
+    <div className="relative overflow-hidden">
+      <Atmosphere />
+      <div className="relative mx-auto max-w-6xl px-4 py-14">
       <h1 className="font-display text-4xl font-semibold tracking-tight sm:text-5xl">Afrekenen</h1>
       <form onSubmit={onSubmit} className="mt-10 grid gap-10 lg:grid-cols-[1fr_380px]">
         <div className="space-y-10">
@@ -95,7 +98,7 @@ export default function CheckoutPage() {
               {PAYMENT_METHODS.map((m, i) => (
                 <label
                   key={m}
-                  className="flex cursor-pointer items-center gap-2 rounded-xl border border-line bg-white p-3 text-sm font-semibold has-[:checked]:border-amber-2 has-[:checked]:ring-2 has-[:checked]:ring-amber"
+                  className="flex cursor-pointer items-center gap-2 glass rounded-xl p-3 text-sm font-semibold has-[:checked]:border-amber-2 has-[:checked]:ring-2 has-[:checked]:ring-amber"
                 >
                   <input type="radio" name="method" value={m} defaultChecked={i === 0} className="accent-amber-2" />
                   {m}
@@ -122,16 +125,17 @@ export default function CheckoutPage() {
             >
               {submitting ? "Bestelling plaatsen…" : "Bestellen en betalen"}
             </button>
-            <p className="mt-3 text-center text-xs text-muted">🔒 Veilig betalen via Mollie</p>
+            <p className="mt-3 text-center text-xs text-muted">Veilig betalen via Mollie</p>
           </OrderSummary>
         </div>
       </form>
+      </div>
     </div>
   );
 }
 
 const inputCls =
-  "mt-1.5 block w-full rounded-xl border border-line bg-white px-4 py-3 outline-none focus:border-amber-2 focus:ring-2 focus:ring-amber/40";
+  "mt-1.5 block w-full rounded-xl border border-night/15 bg-white/70 px-4 py-3 outline-none focus:border-amber-2 focus:ring-2 focus:ring-amber/40";
 
 function Fieldset({ title, children }: { title: string; children: React.ReactNode }) {
   return (

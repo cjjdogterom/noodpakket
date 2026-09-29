@@ -27,16 +27,16 @@ export const FAQ: { q: string; a: string }[] = [
 
 export function Faq() {
   return (
-    <div className="divide-y divide-line border-y border-line">
+    <div className="space-y-3">
       {FAQ.map((item) => (
-        <details key={item.q} className="group">
-          <summary className="flex cursor-pointer items-center justify-between gap-6 py-5 font-display text-lg font-semibold hover:text-amber-2">
+        <details key={item.q} className="glass group rounded-[1.2rem] px-5">
+          <summary className="flex cursor-pointer items-center justify-between gap-6 py-4 font-display text-lg font-bold tracking-tight">
             {item.q}
-            <span className="faq-icon grid h-7 w-7 shrink-0 place-items-center rounded-full border border-line font-mono text-lg transition-transform">
+            <span className="faq-icon grid h-7 w-7 shrink-0 place-items-center rounded-full bg-night/8 font-mono text-lg transition-transform duration-200">
               +
             </span>
           </summary>
-          <p className="max-w-2xl pb-6 leading-relaxed text-muted">{item.a}</p>
+          <p className="max-w-2xl pb-5 leading-relaxed text-muted">{item.a}</p>
         </details>
       ))}
     </div>
