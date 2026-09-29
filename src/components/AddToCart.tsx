@@ -18,7 +18,7 @@ export function AddToCartButton({
   const { add } = useCart();
   if (disabled) {
     return (
-      <span className="rounded-full border border-line px-4 py-2 text-sm font-semibold text-ink-soft">
+      <span className="rounded-full border border-line px-4 py-2 text-sm font-semibold text-muted">
         Tijdelijk uitverkocht
       </span>
     );
@@ -27,7 +27,7 @@ export function AddToCartButton({
     <button
       type="button"
       onClick={() => add(slug)}
-      className={`rounded-full bg-signal font-semibold text-white hover:bg-signal-dark active:scale-[0.98] ${
+      className={`rounded-full bg-amber font-semibold text-night hover:bg-amber-soft active:scale-[0.98] ${
         compact ? "px-4 py-2 text-sm" : "px-6 py-3"
       }`}
     >
@@ -42,7 +42,7 @@ export function AddToCartWithQty({ slug, disabled }: { slug: string; disabled?: 
 
   if (disabled) {
     return (
-      <div className="rounded-xl border border-line bg-paper-2 p-4 text-sm">
+      <div className="rounded-xl border border-line bg-bone-2 p-4 text-sm">
         Dit artikel is tijdelijk uitverkocht. Mail ons en we laten weten wanneer het weer op voorraad is.
       </div>
     );
@@ -54,7 +54,7 @@ export function AddToCartWithQty({ slug, disabled }: { slug: string; disabled?: 
       <button
         type="button"
         onClick={() => add(slug, qty)}
-        className="flex-1 rounded-full bg-signal px-8 py-3.5 font-semibold text-white hover:bg-signal-dark active:scale-[0.99] sm:flex-none"
+        className="flex-1 rounded-full bg-amber px-8 py-3.5 font-semibold text-night hover:bg-amber-soft active:scale-[0.99] sm:flex-none"
       >
         In winkelwagen
       </button>
@@ -108,11 +108,11 @@ export function AddedToast() {
     >
       <div className="flex items-start justify-between gap-3">
         <div>
-          <p className="text-sm font-semibold text-forest">✓ Toegevoegd aan winkelwagen</p>
+          <p className="text-sm font-semibold text-slate">✓ Toegevoegd aan winkelwagen</p>
           <p className="mt-1 font-display font-bold">{product.name}</p>
-          <p className="text-sm text-ink-soft">Subtotaal {formatPrice(totals.subtotalCents)}</p>
+          <p className="text-sm text-muted">Subtotaal {formatPrice(totals.subtotalCents)}</p>
         </div>
-        <button type="button" onClick={dismissAdded} aria-label="Sluiten" className="text-ink-soft hover:text-ink">
+        <button type="button" onClick={dismissAdded} aria-label="Sluiten" className="text-muted hover:text-night">
           ✕
         </button>
       </div>
@@ -120,7 +120,7 @@ export function AddedToast() {
         <Link
           href="/winkelwagen"
           onClick={dismissAdded}
-          className="flex-1 rounded-full bg-forest py-2.5 text-center text-sm font-semibold text-paper hover:bg-forest-2"
+          className="flex-1 rounded-full bg-slate py-2.5 text-center text-sm font-semibold text-bone hover:bg-slate-2"
         >
           Bekijk winkelwagen
         </Link>

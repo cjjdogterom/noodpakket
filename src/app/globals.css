@@ -1,55 +1,91 @@
 @import "tailwindcss";
 
 :root {
-  --paper: #f6f3ec;
-  --paper-2: #ece6d9;
-  --ink: #16211d;
-  --ink-soft: #4a5550;
-  --forest: #1f3a2f;
-  --forest-2: #2c5242;
-  --signal: #e8591a;
-  --signal-dark: #c2440c;
-  --line: #d8d0bf;
+  --night: #0f1a24;
+  --slate: #1c2b38;
+  --slate-2: #2a3d4e;
+  --amber: #f0a21e;
+  --amber-2: #c9800a;
+  --amber-soft: #fbe3b3;
+  --bone: #f3efe7;
+  --bone-2: #e8e2d6;
+  --muted: #5a6873;
+  --mist: #93a4b2;
+  --line: #d9d2c5;
 }
 
 @theme inline {
-  --color-paper: var(--paper);
-  --color-paper-2: var(--paper-2);
-  --color-ink: var(--ink);
-  --color-ink-soft: var(--ink-soft);
-  --color-forest: var(--forest);
-  --color-forest-2: var(--forest-2);
-  --color-signal: var(--signal);
-  --color-signal-dark: var(--signal-dark);
+  --color-night: var(--night);
+  --color-slate: var(--slate);
+  --color-slate-2: var(--slate-2);
+  --color-amber: var(--amber);
+  --color-amber-2: var(--amber-2);
+  --color-amber-soft: var(--amber-soft);
+  --color-bone: var(--bone);
+  --color-bone-2: var(--bone-2);
+  --color-muted: var(--muted);
+  --color-mist: var(--mist);
   --color-line: var(--line);
   --font-sans: var(--font-body);
   --font-display: var(--font-display);
+  --font-mono: var(--font-mono);
 }
 
 body {
-  background: var(--paper);
-  color: var(--ink);
+  background: var(--bone);
+  color: var(--night);
 }
 
 ::selection {
-  background: var(--signal);
-  color: white;
+  background: var(--amber);
+  color: var(--night);
 }
 
-.stripe {
-  background-image: repeating-linear-gradient(
-    -45deg,
-    var(--signal) 0 10px,
-    var(--ink) 10px 20px
-  );
+:focus-visible {
+  outline: 3px solid var(--amber);
+  outline-offset: 3px;
 }
 
-details > summary {
-  list-style: none;
+/* Lichtcirkel in de hero: ademt langzaam */
+.glow {
+  background: radial-gradient(closest-side, rgba(240, 162, 30, 0.55), rgba(240, 162, 30, 0.12) 55%, transparent 100%);
+  animation: breathe 7s ease-in-out infinite;
 }
-details > summary::-webkit-details-marker {
-  display: none;
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.08); opacity: 1; }
 }
-details[open] .faq-icon {
-  transform: rotate(45deg);
+
+.rise {
+  animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow, .rise { animation: none; }
+}
+
+/* Paklijst: stippellijn tussen naam en aantal */
+.leader {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+.leader::after {
+  content: "";
+  order: 1;
+  flex: 1;
+  border-bottom: 1px dotted currentColor;
+  opacity: 0.35;
+  transform: translateY(-0.25em);
+}
+.leader > :last-child {
+  order: 2;
+}
+
+details > summary { list-style: none; }
+details > summary::-webkit-details-marker { display: none; }
+details[open] .faq-icon { transform: rotate(45deg); }

@@ -20,8 +20,8 @@ export default function CheckoutPage() {
   if (totals.resolved.length === 0) {
     return (
       <div className="mx-auto max-w-xl px-4 py-24 text-center">
-        <h1 className="font-display text-4xl font-black">Niets om af te rekenen</h1>
-        <Link href="/pakketten" className="mt-8 inline-block rounded-full bg-signal px-7 py-3.5 font-semibold text-white">
+        <h1 className="font-display text-4xl font-semibold tracking-tight">Niets om af te rekenen</h1>
+        <Link href="/pakketten" className="mt-8 inline-block rounded-full bg-amber px-7 py-3.5 font-semibold text-night">
           Naar de pakketten
         </Link>
       </div>
@@ -59,7 +59,7 @@ export default function CheckoutPage() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-14">
-      <h1 className="font-display text-4xl font-black sm:text-5xl">Afrekenen</h1>
+      <h1 className="font-display text-4xl font-semibold tracking-tight sm:text-5xl">Afrekenen</h1>
       <form onSubmit={onSubmit} className="mt-10 grid gap-10 lg:grid-cols-[1fr_380px]">
         <div className="space-y-10">
           <Fieldset title="1. Contactgegevens">
@@ -88,16 +88,16 @@ export default function CheckoutPage() {
           </Fieldset>
 
           <Fieldset title="3. Betaalmethode">
-            <p className="text-sm text-ink-soft sm:col-span-2">
+            <p className="text-sm text-muted sm:col-span-2">
               Na het plaatsen van je bestelling word je doorgestuurd naar de beveiligde betaalomgeving van Mollie.
             </p>
             <div className="grid grid-cols-2 gap-3 sm:col-span-2 sm:grid-cols-4">
               {PAYMENT_METHODS.map((m, i) => (
                 <label
                   key={m}
-                  className="flex cursor-pointer items-center gap-2 rounded-xl border border-line bg-white p-3 text-sm font-semibold has-[:checked]:border-forest has-[:checked]:ring-2 has-[:checked]:ring-forest"
+                  className="flex cursor-pointer items-center gap-2 rounded-xl border border-line bg-white p-3 text-sm font-semibold has-[:checked]:border-amber-2 has-[:checked]:ring-2 has-[:checked]:ring-amber"
                 >
-                  <input type="radio" name="method" value={m} defaultChecked={i === 0} className="accent-forest" />
+                  <input type="radio" name="method" value={m} defaultChecked={i === 0} className="accent-amber-2" />
                   {m}
                 </label>
               ))}
@@ -108,7 +108,7 @@ export default function CheckoutPage() {
         <div className="lg:sticky lg:top-24 lg:self-start">
           <OrderSummary showLines>
             <label className="mt-6 flex items-start gap-2 text-sm">
-              <input type="checkbox" required className="mt-1 accent-forest" />
+              <input type="checkbox" required className="mt-1 accent-amber-2" />
               <span>
                 Ik ga akkoord met de{" "}
                 <Link href="/voorwaarden" className="underline" target="_blank">algemene voorwaarden</Link>
@@ -118,11 +118,11 @@ export default function CheckoutPage() {
             <button
               type="submit"
               disabled={submitting}
-              className="mt-5 w-full rounded-full bg-signal py-3.5 font-semibold text-white hover:bg-signal-dark disabled:opacity-60"
+              className="mt-5 w-full rounded-full bg-amber py-3.5 font-semibold text-night hover:bg-amber-soft disabled:opacity-60"
             >
               {submitting ? "Bestelling plaatsen…" : "Bestellen en betalen"}
             </button>
-            <p className="mt-3 text-center text-xs text-ink-soft">🔒 Veilig betalen via Mollie</p>
+            <p className="mt-3 text-center text-xs text-muted">🔒 Veilig betalen via Mollie</p>
           </OrderSummary>
         </div>
       </form>
@@ -131,7 +131,7 @@ export default function CheckoutPage() {
 }
 
 const inputCls =
-  "mt-1.5 block w-full rounded-xl border border-line bg-white px-4 py-3 outline-none focus:border-forest focus:ring-2 focus:ring-forest/30";
+  "mt-1.5 block w-full rounded-xl border border-line bg-white px-4 py-3 outline-none focus:border-amber-2 focus:ring-2 focus:ring-amber/40";
 
 function Fieldset({ title, children }: { title: string; children: React.ReactNode }) {
   return (

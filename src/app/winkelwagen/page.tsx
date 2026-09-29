@@ -15,9 +15,9 @@ export default function CartPage() {
   if (totals.resolved.length === 0) {
     return (
       <div className="mx-auto max-w-xl px-4 py-24 text-center">
-        <h1 className="font-display text-4xl font-black">Je winkelwagen is leeg</h1>
-        <p className="mt-3 text-ink-soft">Bekijk onze pakketten en wees voorbereid op 72 uur zonder hulp.</p>
-        <Link href="/pakketten" className="mt-8 inline-block rounded-full bg-signal px-7 py-3.5 font-semibold text-white hover:bg-signal-dark">
+        <h1 className="font-display text-4xl font-semibold tracking-tight">Je winkelwagen is leeg</h1>
+        <p className="mt-3 text-muted">Bekijk onze pakketten en wees voorbereid op 72 uur zonder hulp.</p>
+        <Link href="/pakketten" className="mt-8 inline-block rounded-full bg-amber px-7 py-3.5 font-semibold text-night hover:bg-amber-soft">
           Naar de pakketten
         </Link>
       </div>
@@ -26,7 +26,7 @@ export default function CartPage() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-14">
-      <h1 className="font-display text-4xl font-black sm:text-5xl">Winkelwagen</h1>
+      <h1 className="font-display text-4xl font-semibold tracking-tight sm:text-5xl">Winkelwagen</h1>
       <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_360px]">
         <ul className="divide-y divide-line border-y border-line">
           {totals.resolved.map(({ product, qty, totalCents }) => (
@@ -36,14 +36,14 @@ export default function CartPage() {
               </Link>
               <div className="flex flex-1 flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <Link href={`/pakketten/${product.slug}`} className="font-display text-lg font-bold hover:text-signal-dark">
+                  <Link href={`/pakketten/${product.slug}`} className="font-display text-lg font-bold hover:text-amber-2">
                     {product.name}
                   </Link>
-                  <p className="text-sm text-ink-soft">{formatPrice(product.priceCents)} per stuk</p>
+                  <p className="text-sm text-muted">{formatPrice(product.priceCents)} per stuk</p>
                   <button
                     type="button"
                     onClick={() => remove(product.slug)}
-                    className="mt-1 text-sm text-ink-soft underline underline-offset-2 hover:text-signal-dark"
+                    className="mt-1 text-sm text-muted underline underline-offset-2 hover:text-amber-2"
                   >
                     Verwijderen
                   </button>
@@ -61,7 +61,7 @@ export default function CartPage() {
           <OrderSummary>
             <Link
               href="/afrekenen"
-              className="mt-6 block rounded-full bg-signal py-3.5 text-center font-semibold text-white hover:bg-signal-dark"
+              className="mt-6 block rounded-full bg-amber py-3.5 text-center font-semibold text-night hover:bg-amber-soft"
             >
               Verder naar afrekenen
             </Link>

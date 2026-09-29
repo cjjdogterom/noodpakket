@@ -34,11 +34,11 @@ export function OrderSummary({ showLines = false, children }: { showLines?: bool
           <dt>Verzending</dt>
           <dd className="tabular-nums">{totals.shippingCents === 0 ? "Gratis" : formatPrice(totals.shippingCents)}</dd>
         </div>
-        <div className="flex justify-between border-t border-line pt-3 font-display text-lg font-extrabold">
+        <div className="flex justify-between border-t border-line pt-3 font-display text-lg font-semibold">
           <dt>Totaal</dt>
           <dd className="tabular-nums">{formatPrice(totals.totalCents)}</dd>
         </div>
-        <p className="text-xs text-ink-soft">Inclusief 21% btw</p>
+        <p className="text-xs text-muted">Inclusief 21% btw</p>
       </dl>
 
       {remaining > 0 && totals.subtotalCents > 0 && (
@@ -46,9 +46,9 @@ export function OrderSummary({ showLines = false, children }: { showLines?: bool
           <p className="text-sm">
             Nog <strong>{formatPrice(remaining)}</strong> tot gratis verzending
           </p>
-          <div className="mt-2 h-2 overflow-hidden rounded-full bg-paper-2">
+          <div className="mt-2 h-2 overflow-hidden rounded-full bg-bone-2">
             <div
-              className="h-full rounded-full bg-signal"
+              className="h-full rounded-full bg-amber"
               style={{ width: `${Math.min(100, (totals.subtotalCents / SITE.shipping.freeFromCents) * 100)}%` }}
             />
           </div>

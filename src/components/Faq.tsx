@@ -29,14 +29,14 @@ export function Faq() {
   return (
     <div className="divide-y divide-line border-y border-line">
       {FAQ.map((item) => (
-        <details key={item.q} className="group py-1">
-          <summary className="flex cursor-pointer items-center justify-between gap-6 py-4 font-display text-lg font-bold">
+        <details key={item.q} className="group">
+          <summary className="flex cursor-pointer items-center justify-between gap-6 py-5 font-display text-lg font-semibold hover:text-amber-2">
             {item.q}
-            <span className="faq-icon grid h-8 w-8 shrink-0 place-items-center rounded-full border border-line text-xl transition-transform">
+            <span className="faq-icon grid h-7 w-7 shrink-0 place-items-center rounded-full border border-line font-mono text-lg transition-transform">
               +
             </span>
           </summary>
-          <p className="max-w-2xl pb-5 text-ink-soft">{item.a}</p>
+          <p className="max-w-2xl pb-6 leading-relaxed text-muted">{item.a}</p>
         </details>
       ))}
     </div>
